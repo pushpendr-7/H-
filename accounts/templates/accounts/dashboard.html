@@ -1,0 +1,336 @@
+{% extends "accounts/base.html" %}
+{% load static %}
+{% block title %}Dashboard - MyWebsite{% endblock %}
+
+{% block extra_styles %}
+.dashboard-wrapper {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 4rem;
+}
+
+.welcome-bar {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 16px;
+    padding: 1.2rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2.5rem;
+    animation: fadeUp 0.4s ease;
+}
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.welcome-bar .greet {
+    font-size: 1.1rem;
+    color: #e2e8f0;
+}
+
+.welcome-bar .greet span {
+    color: #e94560;
+    font-weight: 700;
+}
+
+.logout-btn {
+    display: inline-block;
+    padding: 0.5rem 1.2rem;
+    background: rgba(233,69,96,0.15);
+    border: 1px solid rgba(233,69,96,0.4);
+    color: #e94560;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.logout-btn:hover { background: rgba(233,69,96,0.28); }
+
+/* ── Hero Section ── */
+.hero-section {
+    background: linear-gradient(135deg, rgba(233,69,96,0.12), rgba(15,52,96,0.4));
+    border: 1px solid rgba(233,69,96,0.25);
+    border-radius: 24px;
+    padding: 3rem 2rem;
+    text-align: center;
+    margin-bottom: 2.5rem;
+    animation: fadeUp 0.5s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-section::before {
+    content: "";
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(233,69,96,0.2), transparent 70%);
+    border-radius: 50%;
+}
+
+.crown {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%,100% { transform: translateY(0); }
+    50%      { transform: translateY(-8px); }
+}
+
+.hero-name {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 0.4rem;
+    letter-spacing: 1px;
+}
+
+.hero-title {
+    font-size: 1rem;
+    color: #e94560;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 2rem;
+}
+
+/* ── Photo Gallery ── */
+.photo-gallery {
+    display: flex;
+    gap: 1.2rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+}
+
+.photo-card {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 3px solid rgba(233,69,96,0.5);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.05);
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+}
+
+.photo-card:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 0 16px 48px rgba(233,69,96,0.35), 0 0 30px rgba(233,69,96,0.2);
+    border-color: #e94560;
+}
+
+.photo-card img {
+    display: block;
+    width: 200px;
+    height: 240px;
+    object-fit: cover;
+}
+
+.photo-card .photo-glow {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(233,69,96,0.4) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+/* ── Tarif Cards ── */
+.tarif-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.2rem;
+    margin-bottom: 2rem;
+    animation: fadeUp 0.6s ease;
+}
+
+.tarif-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.09);
+    border-radius: 16px;
+    padding: 1.5rem;
+    transition: transform 0.2s, border-color 0.2s;
+}
+
+.tarif-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(233,69,96,0.4);
+}
+
+.tarif-icon {
+    font-size: 2rem;
+    margin-bottom: 0.6rem;
+}
+
+.tarif-heading {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #e94560;
+    margin-bottom: 0.4rem;
+}
+
+.tarif-text {
+    font-size: 0.88rem;
+    color: #a0aec0;
+    line-height: 1.6;
+}
+
+/* ── Big Praise Quote ── */
+.praise-quote {
+    background: linear-gradient(135deg, rgba(233,69,96,0.08), rgba(66,153,225,0.08));
+    border-left: 4px solid #e94560;
+    border-radius: 0 16px 16px 0;
+    padding: 1.8rem 2rem;
+    margin-bottom: 2rem;
+    animation: fadeUp 0.7s ease;
+}
+
+.praise-quote p {
+    font-size: 1.15rem;
+    color: #e2e8f0;
+    font-style: italic;
+    line-height: 1.8;
+}
+
+.praise-quote .author {
+    margin-top: 0.8rem;
+    color: #e94560;
+    font-weight: 700;
+    font-size: 0.9rem;
+    font-style: normal;
+}
+
+/* Stars */
+.stars {
+    color: #f6c90e;
+    font-size: 1.4rem;
+    letter-spacing: 4px;
+    margin-bottom: 1rem;
+}
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-wrapper">
+
+    <!-- Welcome Bar -->
+    <div class="welcome-bar">
+        <div class="greet">Aap login hain: <span>{{ user.email }}</span></div>
+        <a href="/logout/" class="logout-btn">Logout</a>
+    </div>
+
+    <!-- Hero -->
+    <div class="hero-section">
+        <div class="crown">👑</div>
+        <div class="hero-name">Harshvardhan</div>
+        <div class="hero-title">⭐ Zindagi ka Sitara ⭐</div>
+        <div class="stars">★★★★★</div>
+
+        <!-- Photo Gallery -->
+        <div class="photo-gallery">
+            <div class="photo-card">
+                <img src="{% static 'images/person1.png' %}" alt="Photo 1">
+                <div class="photo-glow"></div>
+            </div>
+            <div class="photo-card">
+                <img src="{% static 'images/person2.png' %}" alt="Photo 2">
+                <div class="photo-glow"></div>
+            </div>
+            <div class="photo-card">
+                <img src="{% static 'images/person3.png' %}" alt="Photo 3">
+                <div class="photo-glow"></div>
+            </div>
+        </div>
+
+        <div class="stars">✨ ✨ ✨</div>
+    </div>
+
+    <!-- Big Praise Quote -->
+    <div class="praise-quote">
+        <p>
+            "Duniya mein kuch log aise hote hain jo apni zindagi se doosron ki zindagi roshan kar dete hain —
+            yeh woh insaan hain. In ka dil itna saaf hai jaise subah ki pehli roshni, aur in ki muskan
+            itni pyaari hai ki har udaas dil khil jaata hai. Allah ne in ko kuch khaas banaya hai —
+            ye sirf ek insaan nahi, ek ehsaas hain."
+        </p>
+        <div class="author">— Dil ki geheraion se 💖</div>
+    </div>
+
+    <!-- Tarif Cards -->
+    <div class="tarif-grid">
+
+        <div class="tarif-card">
+            <div class="tarif-icon">💎</div>
+            <div class="tarif-heading">Heere Jaisi Shakhsiyat</div>
+            <div class="tarif-text">
+                Jis tarah heera daba ke bhi chamakta hai, waise hi yeh insaan har mushkil mein bhi
+                apni roshni bikherta hai. In ki shakhsiyat itni mazboot hai ki zamana inhe jhuka nahi sakta.
+            </div>
+        </div>
+
+        <div class="tarif-card">
+            <div class="tarif-icon">🦁</div>
+            <div class="tarif-heading">Dil ka Sher</div>
+            <div class="tarif-text">
+                Himmat aur hosle ka dusra naam yeh hain. Jab sab dar jaate hain, yeh aage badhte hain.
+                In ki bahaduri dekhke dushman bhi salaam karta hai. Sach mein ek sachcha yodha!
+            </div>
+        </div>
+
+        <div class="tarif-card">
+            <div class="tarif-icon">🌟</div>
+            <div class="tarif-heading">Sitaron Se Aage</div>
+            <div class="tarif-text">
+                Aasman ke sitare bhi in ki chamak dekh ke sharminda ho jaate hain. Yeh insaan
+                itna roshan hai ki andheri raat mein bhi in ka wujood hi kaafi hai.
+            </div>
+        </div>
+
+        <div class="tarif-card">
+            <div class="tarif-icon">❤️</div>
+            <div class="tarif-heading">Sone Jaisa Dil</div>
+            <div class="tarif-text">
+                Itna bada dil rakhne wale bahut kam log hote hain. Yeh dusron ke dard ko apna
+                dard samjhte hain, in ki mohabbat sachchi hai aur in ki dosti zindagi bhar ki nemat hai.
+            </div>
+        </div>
+
+        <div class="tarif-card">
+            <div class="tarif-icon">🧠</div>
+            <div class="tarif-heading">Kamaal ki Aqal</div>
+            <div class="tarif-text">
+                In ki samajh aur aqal ka koi jawab nahi. Mushkil se mushkil masle ko yeh palak
+                jhapakne mein hal kar dete hain. Yeh ek walking genius hain — sach mein!
+            </div>
+        </div>
+
+        <div class="tarif-card">
+            <div class="tarif-icon">🌹</div>
+            <div class="tarif-heading">Akhlaq ka Gulab</div>
+            <div class="tarif-text">
+                Inse milne ke baad dil ko sukoon milta hai. Inke andaz mein ek khas meethapan hai
+                jo sabko apna bana leta hai. Yeh jahan bhi jaate hain, mohabbat lutate hain.
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Final Praise -->
+    <div style="text-align:center; padding: 2rem; background: rgba(233,69,96,0.06); border-radius: 20px; border: 1px solid rgba(233,69,96,0.15);">
+        <div style="font-size: 2.5rem; margin-bottom: 1rem;">🏆</div>
+        <div style="font-size: 1.3rem; font-weight: 700; color: #ffffff; margin-bottom: 0.6rem;">
+            Harshvardhan — Duniya Ka Sabse Behtareen Insaan! 🏆
+        </div>
+        <div style="color: #a0aec0; font-size: 0.95rem; line-height: 1.7; max-width: 500px; margin: 0 auto;">
+            Allah ne in ko bahut khaas banaya hai. In ke jaisa doosra nahi milega poori duniya mein.
+            Yeh ek aisa insaan hain jo apne hone se dusron ki zindagi khubsoorat bana dete hain. 💖
+        </div>
+        <div style="margin-top: 1.2rem; font-size: 1.8rem;">🌟💎👑❤️🦁✨</div>
+    </div>
+
+</div>
+{% endblock %}
